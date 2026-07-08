@@ -16,7 +16,7 @@
 
 ## What It Does
 
-This framework runs **3 production AI agents** that autonomously handle user support, feedback analysis, and SEO optimization across two SaaS products:
+This framework powers the AI agents behind **[ZERODOX](https://github.com/Commandershadow9/ZERODOX-Showcase)** (my main product) and GuildScout. It runs **3 core AI agents** plus **8 dedicated SEO worker services** — **11 systemd services** in production — that autonomously handle user support, feedback analysis, and SEO optimization across two SaaS products:
 
 | Agent | Project | What It Does |
 |-------|---------|--------------|
@@ -40,7 +40,7 @@ This framework runs **3 production AI agents** that autonomously handle user sup
 <td align="center" width="150">
 <strong>AI Providers</strong><br>
 <img src="https://img.shields.io/badge/GPT--5.3_Codex-412991?style=flat&logo=openai&logoColor=white" alt="Codex"><br>
-<img src="https://img.shields.io/badge/Claude_Sonnet_4.6-D97706?style=flat&logo=anthropic&logoColor=white" alt="Claude"><br>
+<img src="https://img.shields.io/badge/Claude-D97706?style=flat&logo=anthropic&logoColor=white" alt="Claude"><br>
 <img src="https://img.shields.io/badge/JSON_Schema-333?style=flat" alt="Schema">
 </td>
 <td align="center" width="150">
@@ -99,7 +99,7 @@ AIProviderChain (Strategy + Fallback Pattern)
 │   └── Configurable timeouts (90s–900s)
 │
 └─► ClaudeProvider (Fallback)
-    ├── Claude Sonnet 4.6 via CLI
+    ├── Claude via CLI (subscription-based)
     ├── Multi-strategy JSON extraction
     │   (direct → markdown block → brace matching)
     └── Automatic env cleanup (prevents nested sessions)
@@ -280,19 +280,17 @@ systemctl --user start seo-agent
 
 | Metric | Value |
 |--------|-------|
-| **Total codebase** | ~12,000 lines |
-| **Python files** | 61 |
-| **Core modules** | 14 |
-| **Abstract base classes** | 6 (BaseAgent, SiteHandler, AIProvider, EventSubscriber, AgentDB, Notifier) |
-| **Project plugins** | 2 (feedback, seo) |
-| **Active sites** | 3 (GuildScout, ZERODOX, ZERODOX SEO) |
-| **AI providers** | 2 (Codex CLI, Claude CLI) |
+| **Production code** | ~43,000 lines (Python) |
+| **Test code** | ~16,000 lines |
+| **Python files** | 189 (114 production + 75 test) |
+| **Production services** | 11 systemd services (3 core agents + 8 SEO workers) |
+| **Abstract base classes** | 8 (BaseAgent, SiteHandler, AIProvider, EventSubscriber, AgentDB, Notifier, BaseGitHubFormatter, BaseWorker) |
+| **Core AI agents** | 3 (Herald, Zara, SEO Auditor) |
+| **AI providers** | 2 (Codex CLI, Claude CLI) — generic fallback chain |
 | **Event systems** | 2 (Redis Pub/Sub, PG NOTIFY) |
-| **SEO pipeline steps** | 17 |
+| **SEO pipeline steps** | 17+ (grown over time) |
 | **Discord report types** | 12 |
-| **SEO DB tables** | 10 + 3 composite indexes |
-| **External API integrations** | 5 (GitHub, Discord, Google Search Console, PageSpeed, Google Trends) |
-| **Runtime dependencies** | 6 |
+| **External API integrations** | 8+ (GitHub, Google Search Console, PageSpeed, IndexNow, Google Trends, Discord, Perplexity, Gemini) |
 
 ---
 
